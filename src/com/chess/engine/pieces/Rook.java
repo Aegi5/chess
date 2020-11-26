@@ -7,14 +7,15 @@ import com.chess.engine.board.Move;
 import com.chess.engine.board.Tile;
 import com.google.common.collect.ImmutableList;
 
+import javax.naming.ldap.LdapName;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class Bishop extends Piece{
-    private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-9, -7, 7, 9};
+public class Rook extends Piece{
+    private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-8, -1, 1, 8};
 
-    public Bishop(final int piecePosition, final Alliance pieceAlliance){
+    public Rook(final int piecePosition, final Alliance pieceAlliance){
         super(piecePosition, pieceAlliance);
     }
 
@@ -30,8 +31,8 @@ public class Bishop extends Piece{
                 candidateDestinationCoordinate += candidateCoordinateOffset;
 
                 if (BoardUtils.isValidTileCoordinate((candidateDestinationCoordinate))){
-                    if(isEighthColumnExclusion(this.piecePosition, candidateCoordinateOffset) &&
-                    isEighthColumnExclusion(this.piecePosition, candidateCoordinateOffset)){
+                    if(isFirstColumnExclusion(this.piecePosition, candidateCoordinateOffset) &&
+                    isEighthColumnExclusion(this.piecePosition, candidateDestinationCoordinate)){
                         break;
                     }
 
@@ -54,14 +55,15 @@ public class Bishop extends Piece{
     }
     //column exclusions
     private static boolean isFirstColumnExclusion(final int currentPosition, final int offsetCandidate){
-        return BoardUtils.FIRST_COLUMN[currentPosition] && (offsetCandidate == -9 || offsetCandidate == 7);
+        return BoardUtils.FIRST_COLUMN[currentPosition] && (offsetCandidate == -1);
     }
 
     private static boolean isEighthColumnExclusion(final int currentPosition, final int offsetCandidate){
-        return BoardUtils.EIGHTH_COLUMN[currentPosition] && (offsetCandidate == -7 || offsetCandidate == 9);
+        return BoardUtils.EIGHTH_COLUMN[currentPosition] && (offsetCandidate == 1);
     }
 
+    //same for rows ?
 
-    //no need to do the same for row since indexes will be out of boundaries
+
 
 }
