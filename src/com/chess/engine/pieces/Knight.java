@@ -34,12 +34,10 @@ public class Knight extends Piece{
                         isSecondColumnExclusion(this.piecePosition, currentCandidateOffset) ||
                         isSeventhColumnExclusion(this.piecePosition, currentCandidateOffset) ||
                         isHeighthColumnExclusion(this.piecePosition, currentCandidateOffset)){
-                    break;
+                    continue;
                 }
 
                 //no need to do the same for row since indexes will be out of boundaries
-
-
 
                 final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
                 if (!candidateDestinationTile.isTileOccupied()){

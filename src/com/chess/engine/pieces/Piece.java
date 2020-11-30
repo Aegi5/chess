@@ -23,6 +23,10 @@ public abstract class Piece {
         return this.isFirstMove;
     }
 
+    public int getPiecePosition() {
+        return piecePosition;
+    }
+
     //legal moves
     // return a collection of moves : we can return a set or leave it unspecified : for simplicity we return a list
     public abstract Collection<Move> calculatedLegalMoves(final Board board);

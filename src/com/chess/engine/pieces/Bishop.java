@@ -32,7 +32,7 @@ public class Bishop extends Piece{
                 if (BoardUtils.isValidTileCoordinate((candidateDestinationCoordinate))){
                     if(isEighthColumnExclusion(this.piecePosition, candidateCoordinateOffset) &&
                     isEighthColumnExclusion(this.piecePosition, candidateCoordinateOffset)){
-                        break;
+                        continue;
                     }
 
                     final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);

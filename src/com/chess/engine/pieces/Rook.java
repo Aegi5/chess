@@ -33,7 +33,7 @@ public class Rook extends Piece{
                 if (BoardUtils.isValidTileCoordinate((candidateDestinationCoordinate))){
                     if(isFirstColumnExclusion(this.piecePosition, candidateCoordinateOffset) &&
                     isEighthColumnExclusion(this.piecePosition, candidateDestinationCoordinate)){
-                        break;
+                        continue;
                     }
 
                     final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
