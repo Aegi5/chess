@@ -15,8 +15,8 @@ import java.util.List;
 public class Rook extends Piece{
     private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-8, -1, 1, 8};
 
-    public Rook(final int piecePosition, final Alliance pieceAlliance){
-        super(piecePosition, pieceAlliance);
+    public Rook(final Alliance pieceAlliance, final int piecePosition){
+        super(pieceAlliance, piecePosition);
     }
 
 

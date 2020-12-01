@@ -17,8 +17,8 @@ import java.util.List;
 
 public class Queen extends Piece{
     private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-9, -7, -8, -1, 1, 7, 8, 9};
-    public Queen(final int piecePosition, final Alliance pieceAlliance){
-        super(piecePosition, pieceAlliance);
+    public Queen(final Alliance pieceAlliance, final int piecePosition){
+        super(pieceAlliance, piecePosition);
     }
 
 
