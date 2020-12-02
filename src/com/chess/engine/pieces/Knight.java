@@ -22,6 +22,11 @@ public class Knight extends Piece{
         super(alliance, piecePosition);
     }
 
+    @Override
+    public String toString() {
+        return PieceType.KNIGHT.toString();
+    }
+
 
     @Override
     public Collection<Move> calculatedLegalMoves(Board board) {

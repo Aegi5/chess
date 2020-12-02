@@ -21,6 +21,10 @@ public class Queen extends Piece{
         super(pieceAlliance, piecePosition);
     }
 
+    @Override
+    public String toString() {
+        return PieceType.QUEEN.toString();
+    }
 
     @Override
     public Collection<Move> calculatedLegalMoves(Board board) {

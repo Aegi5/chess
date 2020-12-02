@@ -18,6 +18,10 @@ public class Bishop extends Piece{
         super(pieceAlliance, piecePosition);
     }
 
+    @Override
+    public String toString() {
+        return PieceType.BISHOP.toString();
+    }
 
     @Override
     public Collection<Move> calculatedLegalMoves(Board board) {

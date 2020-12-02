@@ -4,6 +4,7 @@ import com.chess.engine.pieces.Piece;
 import com.google.common.collect.ImmutableMap;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -37,6 +38,7 @@ public abstract class Tile {
 
     public abstract Piece getPiece();
 
+
     // could have created those class in other files
     // declared them static final so to be changeable later ?
     // collection.unmodifiable could also be used
@@ -54,6 +56,11 @@ public abstract class Tile {
         public Piece getPiece() {
             return null;
         }
+
+        @Override
+        public String toString() {
+            return "-";
+        }
     }
 
     public static final class OccupiedTile extends Tile{
@@ -62,6 +69,12 @@ public abstract class Tile {
         private OccupiedTile(int coordinate, Piece piece){
             super(coordinate);
             this.pieceOnTile = piece;
+        }
+
+        @Override
+        public String toString() {
+            //Black pieces returned as lowercase, white as upper case
+            return this.getPiece().getPieceAlliance().isBlack() ? this.getPiece().toString().toLowerCase() : this.getPiece().toString();
         }
 
         @Override

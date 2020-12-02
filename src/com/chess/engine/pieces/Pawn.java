@@ -17,6 +17,11 @@ public class Pawn extends Piece{
         super(pieceAlliance, piecePosition);
     }
 
+    @Override
+    public String toString() {
+        return PieceType.PAWN.toString();
+    }
+
 
     @Override
     public Collection<Move> calculatedLegalMoves(Board board) {
