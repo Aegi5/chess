@@ -2,6 +2,8 @@ package com.chess.engine.board;
 
 import com.chess.engine.Alliance;
 import com.chess.engine.pieces.*;
+import com.chess.engine.player.BlackPlayer;
+import com.chess.engine.player.WhitePlayer;
 import com.google.common.collect.ImmutableList;
 
 import java.util.*;
@@ -11,8 +13,13 @@ public class Board {
     //no immutable array in java but there is immutable list
 
     private final List<Tile> gameBoard;
+
     private final Collection<Piece> whitePieces;
     private final Collection<Piece> blackPieces;
+
+    private final WhitePlayer whitePlayer;
+    private final BlackPlayer blackPlayer;
+
     public Tile getTile(final int tileCoordinate) { return this.gameBoard.get(tileCoordinate); }
 
     private Board(Builder builder){
@@ -23,6 +30,17 @@ public class Board {
         final Collection<Move> whiteStandardLegalMove = calculateLegalMoves(this.whitePieces);
         final Collection<Move> blackStandardLegalMove = calculateLegalMoves(this.blackPieces);
 
+        this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMove, blackStandardLegalMove);
+        this.blackPlayer = new BlackPlayer(this, blackStandardLegalMove, whiteStandardLegalMove);
+
+    }
+
+    public Collection<Piece> getBlackPieces(){
+      return this.blackPieces;
+    }
+
+    public Collection<Piece> getWhilePieces(){
+        return this.whitePieces;
     }
 
     private Collection<Move> calculateLegalMoves(Collection<Piece> pieces) {

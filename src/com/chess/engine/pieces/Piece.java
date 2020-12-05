@@ -7,12 +7,15 @@ import com.chess.engine.Alliance;
 import java.util.Collection;
 
 public abstract class Piece {
-
+    protected final PieceType pieceType;
     protected final int piecePosition;
     protected final Alliance pieceAlliance; //black or white
     protected final boolean isFirstMove;
 
-    Piece(final Alliance pieceAlliance, final int piecePosition){
+    Piece(final PieceType pieceType,
+          final Alliance pieceAlliance,
+          final int piecePosition){
+        this.pieceType = pieceType;
         this.piecePosition = piecePosition;
         this.pieceAlliance = pieceAlliance;
         // TODO : more work here
@@ -34,12 +37,42 @@ public abstract class Piece {
     public Alliance getPieceAlliance() { return this.pieceAlliance;}
 
     public enum PieceType{
-        PAWN("P"),
-        KNIGHT("N"),
-        BISHOP("B"),
-        ROOK("R"),
-        QUEEN("Q"),
-        KING("K");
+        PAWN("P"){
+            @Override
+            public boolean isKing() {
+                return false;
+            }
+        },
+        KNIGHT("N"){
+            @Override
+            public boolean isKing() {
+                return false;
+            }
+        },
+        BISHOP("B"){
+            @Override
+            public boolean isKing() {
+                return false;
+            }
+        },
+        ROOK("R"){
+            @Override
+            public boolean isKing() {
+                return false;
+            }
+        },
+        QUEEN("Q"){
+            @Override
+            public boolean isKing() {
+                return false;
+            }
+        },
+        KING("K"){
+            @Override
+            public boolean isKing() {
+                return true;
+            }
+        };
 
         private final String pieceName;
 
@@ -51,8 +84,13 @@ public abstract class Piece {
         public String toString() {
             return this.pieceName;
         }
+
+        public abstract boolean isKing();
+
     }
 
-
+    public PieceType getPieceType() {
+        return pieceType;
+    }
 
 }
