@@ -29,29 +29,6 @@ public class BlackPlayer extends Player {
         return this.board.whitePlayer();
     }
 
-    public boolean isMoveLegal(Move move){
-        return this.legalMoves.contains(move);
-    }
 
-    public boolean isInCheck(){
-        return false;
-    }
-
-    public boolean isInCheckmate(){
-        return false;
-    }
-
-    public boolean isInStalemate(){
-        return false;
-    }
-
-    public boolean isCastled(){
-        return false;
-    }
-
-
-    public MoveTransition MakeMove(final Move move){
-
-    }
 }
 

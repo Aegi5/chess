@@ -33,5 +33,7 @@ public abstract class Move {
         }
     }
 
-
+    public int getDestinationCoordinate() {
+        return destinationCoordinate;
+    }
 }
