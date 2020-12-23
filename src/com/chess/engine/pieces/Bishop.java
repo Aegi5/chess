@@ -65,8 +65,13 @@ public class Bishop extends Piece{
     private static boolean isEighthColumnExclusion(final int currentPosition, final int offsetCandidate){
         return BoardUtils.EIGHTH_COLUMN[currentPosition] && (offsetCandidate == -7 || offsetCandidate == 9);
     }
-
-
     //no need to do the same for row since indexes will be out of boundaries
+
+
+    @Override
+    public Bishop movePiece(Move move) {
+        return new Bishop(move.getMovedPiece().getPieceAlliance(), move.getDestinationCoordinate());
+    }
+
 
 }

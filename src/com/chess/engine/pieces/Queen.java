@@ -68,4 +68,10 @@ public class Queen extends Piece{
     private static boolean isEighthColumnExclusion(final int currentPosition, final int offsetCandidate){
         return BoardUtils.EIGHTH_COLUMN[currentPosition] && (offsetCandidate == 1 || offsetCandidate == -7 || offsetCandidate == 9);
     }
+
+    @Override
+    public Queen movePiece(Move move) {
+        return new Queen(move.getMovedPiece().getPieceAlliance(), move.getDestinationCoordinate());
+    }
+
 }

@@ -14,8 +14,8 @@ import java.util.List;
 public class King extends Piece{
     private static final int[] CANDIDATE_MOVE_VECTOR_COORDINATES ={-9,-8,-7, -1, 1, 7, 8, 9};
 
-    public King(final int piecePosition,
-                final Alliance pieceAlliance) {
+    public King(final Alliance pieceAlliance,
+                final int piecePosition) {
         super(PieceType.KING, pieceAlliance, piecePosition);
     }
 
@@ -67,6 +67,11 @@ public class King extends Piece{
         return BoardUtils.EIGHTH_COLUMN[currentPosition] && (candidatOffset == 9 || candidatOffset == 1 ||
                 candidatOffset == 7
         );
+    }
+
+    @Override
+    public King movePiece(Move move) {
+        return new King(move.getMovedPiece().getPieceAlliance(), move.getDestinationCoordinate());
     }
 
 

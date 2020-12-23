@@ -85,4 +85,9 @@ public class Knight extends Piece{
     }
     //row exclusion
 
+    @Override
+    public Knight movePiece(Move move) {
+        return new Knight(move.getMovedPiece().getPieceAlliance(), move.getDestinationCoordinate());
+    }
+
 }

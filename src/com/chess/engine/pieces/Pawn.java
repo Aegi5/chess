@@ -83,4 +83,9 @@ public class Pawn extends Piece{
         }
         return ImmutableList.copyOf(legalMoves);
     }
+    @Override
+    public Pawn movePiece(Move move) {
+        return new Pawn(move.getMovedPiece().getPieceAlliance(), move.getDestinationCoordinate());
+    }
+
 }
