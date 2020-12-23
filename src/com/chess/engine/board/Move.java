@@ -2,16 +2,18 @@ package com.chess.engine.board;
 
 import com.chess.engine.pieces.Piece;
 
+import static com.chess.engine.board.Board.*;
+
 public abstract class Move {
     final Board board;
-    final Piece piece;
+    final Piece movedPiece;
     final int destinationCoordinate;
 
     public Move(final Board board,
-         final Piece piece,
+         final Piece movedPiece,
          final int destinationCoordinate){
         this.board = board;
-        this.piece = piece;
+        this.movedPiece = movedPiece;
         this.destinationCoordinate = destinationCoordinate;
     }
 
@@ -19,14 +21,27 @@ public abstract class Move {
 
     public static final class MajorMove extends Move{
         public MajorMove(final Board board,
-                  final Piece piece,
+                  final Piece movedPiece,
                   final int destinationCoordinate){
-            super(board, piece, destinationCoordinate);
+            super(board, movedPiece, destinationCoordinate);
         }
 
         @Override
         public Board execute() {
-            return null;
+            final Builder builder = new Builder();
+            for(final Piece piece : this.board.getCurrentPlayer().getActivePiece()){
+                //TODO : hash code equals for pieces
+                if(!this.movedPiece.equals(piece)){
+                    builder.setPiece(piece);
+                }
+            }
+            for(final Piece piece : this.board.getCurrentPlayer().getOpponent().getActivePiece()){
+                builder.setPiece(piece);
+            }
+            //move the moved piece
+            builder.setPiece(null);
+            builder.setMoveMaker(this.board.getCurrentPlayer().getOpponent().getAlliance());
+            return  builder.build();
         }
     }
     public static final class AttackMove extends Move{
