@@ -15,6 +15,7 @@ public class Board {
 
     private final List<Tile> gameBoard;
 
+    private final Player currentPlayer;
     private final Collection<Piece> whitePieces;
     private final Collection<Piece> blackPieces;
 
@@ -34,6 +35,8 @@ public class Board {
         this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMove, blackStandardLegalMove);
         this.blackPlayer = new BlackPlayer(this, blackStandardLegalMove, whiteStandardLegalMove);
 
+        this.currentPlayer= null;
+
     }
 
     public Collection<Piece> getBlackPieces(){
@@ -45,6 +48,10 @@ public class Board {
 
     public Player blackPlayer(){
         return this.blackPlayer;
+    }
+
+    public Player getCurrentPlayer(){
+        return this.currentPlayer;
     }
 
     public Collection<Piece> getWhilePieces(){

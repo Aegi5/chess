@@ -47,6 +47,14 @@ public abstract class Player {
         throw new RuntimeException("Should not reach here ! Invalid board !\n");
     }
 
+    public King getPlayerKing(){
+        return this.playerKing;
+    }
+
+    public Collection<Move> getLegalMoves() {
+        return legalMoves;
+    }
+
     public abstract Collection<Piece> getActivePiece();
 
     public abstract Alliance getAlliance();
@@ -57,13 +65,25 @@ public abstract class Player {
         return isInCheck;
     }
 
+    public boolean isInCheckmate(){
+        return isInCheck & !hasEscapeMoves();
+    }
+
+
+    //TODO : implements those methods
+    public boolean isInStalemate(){
+        return !isInCheck & !hasEscapeMoves();
+    }
+
+    public boolean isCastled(){
+        return false;
+    }
+
+
     public boolean isMoveLegal(Move move){
         return this.legalMoves.contains(move);
     }
 
-    public boolean isInCheckmate(){
-        return isInCheck & !hasEscapeMoves();
-    }
 
     protected boolean hasEscapeMoves(){
         //make all moves in a temporary board, then we look at the result
@@ -78,16 +98,18 @@ public abstract class Player {
         return false;
     }
 
-    //TODO : implements those methods
-    public boolean isInStalemate(){
-        return !isInCheck & !hasEscapeMoves();
-    }
-
-    public boolean isCastled(){
-        return false;
-    }
-
-
     public MoveTransition makeMove(final Move move){
+        if(isMoveLegal(move)){
+            //no new board to transitition to since the move is illegal
+            return new MoveTransition(this.board, move, MoveStatus.ILLEGAL_MOVE);
+        }
+        final Board transitionBoard = move.execute();
+
+        final Collection<Move> kingAttack = Player.calculateAttacksOnKing(transitionBoard.getCurrentPlayer().getOpponent().getPlayerKing().getPiecePosition(),
+                transitionBoard.getCurrentPlayer().getLegalMoves());
+        if(!kingAttack.isEmpty()){
+            return new MoveTransition(this.board, move, MoveStatus.LEAVES_PLAYER_IN_CHECK);
+        }
+        return new MoveTransition(transitionBoard, move, MoveStatus.DONE);
     }
 }
