@@ -10,6 +10,27 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/src/com/chess/engine/pieces/Piece.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/src/com/chess/engine/player/Player.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/src/com/chess/engine/player/WhitePlayer.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

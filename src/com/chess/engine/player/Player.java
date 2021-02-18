@@ -24,13 +24,13 @@ public abstract class Player {
         this.playerKing = establishKing();
         this.legalMoves = legalMoves;
         //in regards to all possible enemy attack, determine whether the player's in check
-        this.isInCheck = !Player.calculateAttacksOnKing(this.playerKing.getPiecePosition(), opponentMoves).isEmpty();
+        this.isInCheck = !Player.calculateAttacksOnTile(this.playerKing.getPiecePosition(), opponentMoves).isEmpty();
     }
 
-    public static Collection<Move> calculateAttacksOnKing(int kingPosition, Collection<Move> moves){
+    protected static Collection<Move> calculateAttacksOnTile(int piecePosition, Collection<Move> moves){
         final List<Move> attackMove = new ArrayList<>();
         for(final Move move : moves){
-            if(kingPosition == move.getDestinationCoordinate()){
+            if(piecePosition == move.getDestinationCoordinate()){
                 attackMove.add(move);
             }
         }
@@ -56,15 +56,13 @@ public abstract class Player {
     }
 
     public abstract Collection<Piece> getActivePiece();
-
     public abstract Alliance getAlliance();
-
     public abstract Player getOpponent();
+    protected abstract Collection<Move> calculateKingCastles(Collection<Move>  playerLegalMoves, Collection<Move> opponentLegalMoves);
 
     public boolean isInCheck() {
         return isInCheck;
     }
-
     public boolean isInCheckmate(){
         return isInCheck & !hasEscapeMoves();
     }
@@ -105,7 +103,7 @@ public abstract class Player {
         }
         final Board transitionBoard = move.execute();
 
-        final Collection<Move> kingAttack = Player.calculateAttacksOnKing(transitionBoard.getCurrentPlayer().getOpponent().getPlayerKing().getPiecePosition(),
+        final Collection<Move> kingAttack = Player.calculateAttacksOnTile(transitionBoard.getCurrentPlayer().getOpponent().getPlayerKing().getPiecePosition(),
                 transitionBoard.getCurrentPlayer().getLegalMoves());
         if(!kingAttack.isEmpty()){
             return new MoveTransition(this.board, move, MoveStatus.LEAVES_PLAYER_IN_CHECK);
