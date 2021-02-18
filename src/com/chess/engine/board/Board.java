@@ -117,6 +117,9 @@ public class Board {
         public Board build(){
             return new Board(this);
         }
+
+        public void setEnPassantPawn(Pawn movedPawn) {
+        }
     }
     private static List<Tile> createGameBoard(final Builder builder){
         final Tile[] tiles = new Tile[BoardUtils.NUM_TILES];
