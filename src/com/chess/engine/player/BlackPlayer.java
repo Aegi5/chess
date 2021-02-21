@@ -5,11 +5,14 @@ import com.chess.engine.board.Board;
 import com.chess.engine.board.Move;
 import com.chess.engine.board.Tile;
 import com.chess.engine.pieces.Piece;
+import com.chess.engine.pieces.Rook;
 import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static com.chess.engine.board.Move.*;
 
 public class BlackPlayer extends Player {
     public BlackPlayer(Board board,
@@ -34,7 +37,8 @@ public class BlackPlayer extends Player {
     }
 
     @Override
-    protected Collection<Move> calculateKingCastles(Collection<Move> playerLegalMoves, Collection<Move> opponentLegalMoves) {
+    protected Collection<Move> calculateKingCastles(final Collection<Move> playerLegalMoves,
+                                                    final Collection<Move> opponentLegalMoves) {
 
         final List<Move> kingCastles = new ArrayList<>();
         if (this.playerKing.isFirstMove() && !this.isInCheck()){
@@ -47,8 +51,12 @@ public class BlackPlayer extends Player {
                         rookTile.getPiece().getPieceType().isRook()){
                     if(Player.calculateAttacksOnTile(5, opponentLegalMoves).isEmpty() &&
                             Player.calculateAttacksOnTile(6, opponentLegalMoves).isEmpty()){
-                        //TODO ADD A CASTLE MOVE
-                        kingCastles.add(null);
+                        kingCastles.add(new KingSideCastleMove(this.board,
+                                this.getPlayerKing(),
+                                6,
+                                (Rook) rookTile.getPiece(),
+                                rookTile.getTilePosition(),
+                                5));
                     }
 
                 }
@@ -59,8 +67,12 @@ public class BlackPlayer extends Player {
                     !this.board.getTile(2).isTileOccupied() &&
                     !this.board.getTile(3).isTileOccupied()){
                 final Tile rookTile = this.board.getTile(0);
-                //TODO add castle MOVE
-                kingCastles.add(null);
+                kingCastles.add(new QueenSideCastleMove(this.board,
+                        this.getPlayerKing(),
+                        2,
+                        (Rook) rookTile.getPiece(),
+                        rookTile.getTilePosition(),
+                        3));
             }
         }
         return ImmutableList.copyOf(kingCastles);

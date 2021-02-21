@@ -6,6 +6,7 @@ import com.chess.engine.board.Move;
 import com.chess.engine.pieces.King;
 import com.chess.engine.pieces.Piece;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,7 +23,7 @@ public abstract class Player {
            final  Collection<Move> opponentMoves){
         this.board = board;
         this.playerKing = establishKing();
-        this.legalMoves = legalMoves;
+        this.legalMoves = ImmutableList.copyOf(Iterables.concat(legalMoves, calculateKingCastles(legalMoves, opponentMoves))); // add king castling moves
         //in regards to all possible enemy attack, determine whether the player's in check
         this.isInCheck = !Player.calculateAttacksOnTile(this.playerKing.getPiecePosition(), opponentMoves).isEmpty();
     }
@@ -47,18 +48,19 @@ public abstract class Player {
         throw new RuntimeException("Should not reach here ! Invalid board !\n");
     }
 
+
+    protected abstract Collection<Move> calculateKingCastles(Collection<Move>  playerLegalMoves, Collection<Move> opponentLegalMoves);
+
+
     public King getPlayerKing(){
         return this.playerKing;
     }
-
     public Collection<Move> getLegalMoves() {
         return legalMoves;
     }
-
     public abstract Collection<Piece> getActivePiece();
     public abstract Alliance getAlliance();
     public abstract Player getOpponent();
-    protected abstract Collection<Move> calculateKingCastles(Collection<Move>  playerLegalMoves, Collection<Move> opponentLegalMoves);
 
     public boolean isInCheck() {
         return isInCheck;
@@ -66,18 +68,13 @@ public abstract class Player {
     public boolean isInCheckmate(){
         return isInCheck & !hasEscapeMoves();
     }
-
-
     //TODO : implements those methods
     public boolean isInStalemate(){
         return !isInCheck & !hasEscapeMoves();
     }
-
     public boolean isCastled(){
         return false;
     }
-
-
     public boolean isMoveLegal(Move move){
         return this.legalMoves.contains(move);
     }

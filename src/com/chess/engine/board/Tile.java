@@ -38,6 +38,8 @@ public abstract class Tile {
 
     public abstract Piece getPiece();
 
+    public abstract int getTilePosition();
+
 
     // could have created those class in other files
     // declared them static final so to be changeable later ?
@@ -55,6 +57,11 @@ public abstract class Tile {
         @Override
         public Piece getPiece() {
             return null;
+        }
+
+        @Override
+        public int getTilePosition() {
+            return this.tileCoordinate;
         }
 
         @Override
@@ -85,6 +92,11 @@ public abstract class Tile {
         @Override
         public Piece getPiece() {
             return this.pieceOnTile;
+        }
+
+        @Override
+        public int getTilePosition() {
+            return this.tileCoordinate;
         }
     }
 }
