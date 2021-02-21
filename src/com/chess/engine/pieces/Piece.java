@@ -117,13 +117,13 @@ public abstract class Piece {
             this.pieceName = pieceName;
         }
 
+        public abstract boolean isKing();
+        public abstract boolean isRook();
+
         @Override
         public String toString() {
             return this.pieceName;
         }
-
-        public abstract boolean isKing();
-        public abstract boolean isRook();
 
 
     }

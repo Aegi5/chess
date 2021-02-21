@@ -2,6 +2,7 @@ package com.chess.engine.board;
 
 import com.chess.engine.pieces.Pawn;
 import com.chess.engine.pieces.Piece;
+import com.chess.engine.pieces.Rook;
 
 import static com.chess.engine.board.Board.*;
 
@@ -60,7 +61,7 @@ public abstract class Move {
         return false;
     }
 
-    public boolean isCastling(){
+    public boolean isCastlingMove(){
         return false;
     }
 
@@ -220,11 +221,49 @@ public abstract class Move {
 
     }
 
-    public static class CastleMove extends Move{
+    public static abstract class CastleMove extends Move{
+
+        protected  final Rook castleRook;
+        protected final int castleRookStart;
+        protected final int castleDestination;
+
         public CastleMove(final Board board,
                           final Piece movedPiece,
-                          final int destinationCoordinate){
+                          final int destinationCoordinate,
+                          final Rook castleRook,
+                          final  int castleRookStart,
+                          final  int castleDestination){
             super(board, movedPiece, destinationCoordinate);
+            this.castleRook = castleRook;
+            this.castleRookStart = castleRookStart;
+            this.castleDestination = castleDestination;
+        }
+
+        public Rook getCastleRook(){
+            return this.castleRook;
+        }
+
+        @Override
+        public boolean isCastlingMove(){
+            return true;
+        }
+
+        @Override
+        public Board execute(){
+            final Builder builder = new Builder();
+            for(final Piece piece : this.board.getCurrentPlayer().getActivePiece()){
+                if(!this.movedPiece.equals(piece) && !this.movedPiece.equals(castleRook)){
+                    builder.setPiece(piece);
+                }
+            }
+            for(final Piece piece : this.board.getCurrentPlayer().getOpponent().getActivePiece()){
+                builder.setPiece(piece);
+            }
+            builder.setPiece(this.movedPiece.movePiece(this)); //move king
+            builder.setPiece(new Rook(this.castleRook.getPieceAlliance(), this.castleDestination)); // move rook
+            //TODO : look into the first move in normal pieces (use it for Rook in this context)
+            builder.setMoveMaker(this.board.getCurrentPlayer().getOpponent().getAlliance());
+            return builder.build();
         }
 
     }
@@ -233,15 +272,31 @@ public abstract class Move {
     public static final class KingSideCastleMove extends CastleMove{
         public KingSideCastleMove(final Board board,
                                   final Piece movedPiece,
-                                  final int destinationCoordinate){
-            super(board, movedPiece, destinationCoordinate);
+                                  final int destinationCoordinate,
+                                  final Rook castleRook,
+                                  final  int castleRookStart,
+                                  final  int castleDestination){
+            super(board, movedPiece, destinationCoordinate, castleRook, castleRookStart, castleDestination);
+
+        }
+        @Override
+        public String toString(){
+            return  "0-0";
         }
     }
     public static final class QueenSideCastleMove extends CastleMove{
         public QueenSideCastleMove(final Board board,
                                    final Piece movedPiece,
-                                   final int destinationCoordinate){
-            super(board, movedPiece, destinationCoordinate);
+                                   final int destinationCoordinate,
+                                   final Rook castleRook,
+                                   final  int castleRookStart,
+                                   final  int castleDestination){
+            super(board, movedPiece, destinationCoordinate, castleRook, castleRookStart, castleDestination);
+        }
+
+        @Override
+        public String toString(){
+            return  "0-0-0";
         }
     }
 
