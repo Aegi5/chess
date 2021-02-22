@@ -6,7 +6,7 @@ import com.chess.engine.board.Move;
 public class MoveTransition {
     private final Board transitionBoard;
     private final Move move;
-    private final MoveStatus;moveStatus;
+    private final MoveStatus moveStatus;
     //status after move : if the player is in check or put himself in check, the move is illegal
 
     public MoveTransition(final Board transitionBoard,

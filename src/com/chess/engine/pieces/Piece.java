@@ -12,7 +12,7 @@ public abstract class Piece {
     protected final int piecePosition;
     protected final Alliance pieceAlliance; //black or white
     protected final boolean isFirstMove;
-    private final int cachedHashCode = computeHashCode();
+    private final int cachedHashCode;
 
     Piece(final PieceType pieceType,
           final Alliance pieceAlliance,
@@ -20,6 +20,7 @@ public abstract class Piece {
         this.pieceType = pieceType;
         this.piecePosition = piecePosition;
         this.pieceAlliance = pieceAlliance;
+        this.cachedHashCode = computeHashCode();
         // TODO : more work here
         this.isFirstMove = false;
     }
@@ -150,10 +151,10 @@ public abstract class Piece {
 
     private int computeHashCode() {
         //personnalized hashcoed
-        int result = pieceType.hashCode();
-        result = result * 31 + pieceAlliance.hashCode();
-        result = result * 31 + piecePosition;
-        result = result * 31 * (isFirstMove ? 1: 0);
+        int result = this.pieceType.hashCode();
+        result = result * 31 + this.pieceAlliance.hashCode();
+        result = result * 31 + this.piecePosition;
+        result = result * 31 * (this.isFirstMove ? 1: 0);
         return result;
     }
 
