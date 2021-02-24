@@ -15,18 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
+    private final JFrame gameFrame;
+    private final BoardPanel boardPanel;
+    private final Board chessBoard;
 
     private static final Dimension OUTER_FRAME_DIMENSION = new Dimension(600, 600);
     private static final Dimension BOARD_PANEL_DIMENSION = new Dimension(400, 350);
     private static final Dimension TILE_PANEL_DIMENSION = new Dimension(10,10);
 
+    private static String defaultPieceImgPath = "art/simple/";
+
     private final Color lightTileColor = Color.decode("#FFFACD");
     private final Color darkTileColor = Color.decode("#593E1A");
-
-
-
-    private final JFrame gameFrame;
-    private final BoardPanel boardPanel;
 
     public Table(){
 
@@ -35,18 +35,21 @@ public class Table {
         final JMenuBar tableMenuBar = createTableMenuBar();
         this.gameFrame.setJMenuBar(tableMenuBar); // somehow not visible ?
         this.gameFrame.setSize(OUTER_FRAME_DIMENSION);
+        this.chessBoard = Board.createStandardBoard();
         this.boardPanel = new BoardPanel();
         this.gameFrame.add(this.boardPanel, BorderLayout.CENTER);
         this.gameFrame.setVisible(true);
     }
 
     private JMenuBar createTableMenuBar() {
+
         final JMenuBar tableMenuBar = new JMenuBar();
         tableMenuBar.add(createFileMenu());
         return tableMenuBar;
     }
 
     private JMenu createFileMenu() {
+
         final JMenu fileMenu = new JMenu();
         final JMenuItem openPGN = new JMenuItem("Load PGN File");
         openPGN.addActionListener(new ActionListener() {
@@ -72,6 +75,7 @@ public class Table {
     //Visual component that represent the board
 
     private class BoardPanel extends JPanel{
+
         final List<TilePanel> boardTiles;
 
         BoardPanel(){
@@ -97,6 +101,7 @@ public class Table {
             this.tileId = tileId;
             setPreferredSize(TILE_PANEL_DIMENSION);
             assignTileColor();
+            assignTilePieceIcon(chessBoard);
             validate();
         }
 
@@ -116,11 +121,10 @@ public class Table {
         public void assignTilePieceIcon(final Board board){
             this.removeAll();
             if(board.getTile(this.tileId).isTileOccupied()){
-                String pieceIconPath;
                 try{
                     final BufferedImage image =
-                            ImageIO.read(new File(pieceIconPath + board.getTile(this.tileId).getPiece().getPieceAlliance().toString().substring(0,1)) +
-                                    board.getTile(this.tileId).getPiece().toString() + ".gif"); //building naming convention
+                            ImageIO.read(new File(defaultPieceImgPath + board.getTile(this.tileId).getPiece().getPieceAlliance().toString().substring(0,1) +
+                                    board.getTile(this.tileId).getPiece().toString() + ".gif")); //building naming convention
                     add(new JLabel(new ImageIcon(image)));
 
                 }
