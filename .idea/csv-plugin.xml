@@ -17,6 +17,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/src/com/chess/engine/board/Tile.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/src/com/chess/engine/pieces/Piece.java">
           <value>
             <Attribute>
