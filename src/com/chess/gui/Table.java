@@ -26,7 +26,7 @@ import static javax.swing.SwingUtilities.isRightMouseButton;
 public class Table {
     private final JFrame gameFrame;
     private final BoardPanel boardPanel;
-    private final Board chessBoard;
+    private Board chessBoard;
 
     private Tile sourceTile;
     private Tile destinationTile;
@@ -102,6 +102,16 @@ public class Table {
             setPreferredSize(BOARD_PANEL_DIMENSION);
             validate();
         }
+
+        public void drawBoard(final Board board){
+            removeAll();
+            for (final TilePanel tilePanel: boardTiles){
+                tilePanel.drawTile(board);
+                add(tilePanel);
+            }
+            validate();
+            repaint();
+        }
     }
 
     private class TilePanel extends JPanel{
@@ -133,10 +143,30 @@ public class Table {
                                 sourceTile = null;
                             }
                         } else {
+                            // get legal move with source you've selected and dest selected
                             destinationTile = chessBoard.getTile(tileId);
-                            final Move move = null;
-                            //TODO : move
+                            final Move move = Move.MoveFactory.createMove(chessBoard,
+                                    sourceTile.getTileCoordinate(),
+                                    destinationTile.getTileCoordinate());
+                            final MoveTransition transition = chessBoard.getCurrentPlayer().makeMove(move);
+                            if(transition.getMoveStatus().isDone()){
+                                chessBoard = transition.getTransitionBoard();
+                                // add the move that was mad to the move log
+                            }
+
+                            // clear state
+                            sourceTile = null;
+                            destinationTile = null;
+                            humanMovedPiece = null;
                         }
+
+                        //update GUI
+                        SwingUtilities.invokeLater(new Runnable(){
+                            @Override
+                            public void run() {
+                                boardPanel.drawBoard(chessBoard);
+                            }
+                        });
                     }
                 }
 
@@ -161,6 +191,16 @@ public class Table {
                 }
             });
             validate();
+        }
+
+        public void drawTile(final Board board){
+            assignTileColor();
+            assignTilePieceIcon(board);
+
+            //TODO : tiles to highlights for legal moves
+
+            validate();
+            repaint();
         }
 
         public void assignTileColor(){

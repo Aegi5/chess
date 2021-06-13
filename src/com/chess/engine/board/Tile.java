@@ -37,7 +37,7 @@ public abstract class Tile {
 
     public abstract Piece getPiece();
 
-    public abstract int getTilePosition();
+    public abstract int getTileCoordinate();
 
 
     // could have created those class in other files
@@ -59,7 +59,7 @@ public abstract class Tile {
         }
 
         @Override
-        public int getTilePosition() {
+        public int getTileCoordinate() {
             return this.tileCoordinate;
         }
 
@@ -97,7 +97,7 @@ public abstract class Tile {
         }
 
         @Override
-        public int getTilePosition() {
+        public int getTileCoordinate() {
             return this.tileCoordinate;
         }
     }

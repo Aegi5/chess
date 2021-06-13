@@ -55,7 +55,7 @@ public class WhitePlayer extends Player {
                                                                     this.getPlayerKing(),
                                                 62,
                                                                     (Rook) rookTile.getPiece(),
-                                                                    rookTile.getTilePosition(),
+                                                                    rookTile.getTileCoordinate(),
                                                     61));
                     }
 
@@ -75,7 +75,7 @@ public class WhitePlayer extends Player {
                                                         this.getPlayerKing(),
                                                         56,
                                                         (Rook) rookTile.getPiece(),
-                                                        rookTile.getTilePosition(),
+                                                        rookTile.getTileCoordinate(),
                                                         61));
             }
         }
